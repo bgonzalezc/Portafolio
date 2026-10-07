@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { contact, links, projects, stack } from "@/lib/portfolio";
-import LiveClock from "./live-clock";
-import SceneSlot from "./scene-slot";
+import Hero from "./hero";
+
 type Project = (typeof projects)[number];
 const sections = [
   "INDEX",
@@ -24,45 +24,11 @@ function SectionLabel({ number, title }: { number: string; title: string }) {
 function ProjectVisual({ project }: { project: Project }) {
   return (
     <div
-      className={`project-visual ${project.visual}`}
+      className="project-visual"
       aria-label={`Espacio de captura para ${project.title}`}
     >
-      <div className="visual-top mono">
-        <span>{project.year} / STUDY</span>
-        <span>PREVIEW SLOT</span>
-      </div>
-      {project.visual === "forecast" ? (
-        <svg viewBox="0 0 400 150" aria-hidden="true">
-          <path
-            className="chart-grid"
-            d="M0 30H400M0 75H400M0 120H400M80 0V150M160 0V150M240 0V150M320 0V150"
-          />
-          <path
-            className="chart-line"
-            d="M0 130L25 120L42 127L70 88L96 98L123 78L149 91L172 55L197 68L223 39L249 56L269 26L292 37"
-          />
-          <path className="chart-predict" d="M292 37L325 30L357 20L400 12" />
-        </svg>
-      ) : project.visual === "dashboard" ? (
-        <div className="bars" aria-hidden="true">
-          {[35, 57, 42, 70, 61, 82, 75, 95].map((h, i) => (
-            <span key={i} style={{ height: `${h}%` }} />
-          ))}
-        </div>
-      ) : (
-        <div className="visual-type" aria-hidden="true">
-          {project.visual === "atlas"
-            ? "ATLAS"
-            : project.visual === "elevator"
-              ? "01 / 08"
-              : project.visual === "cloud"
-                ? "LOCALHOST"
-                : "PK → FK"}
-        </div>
-      )}
-      <span className="visual-bottom mono">
-        {project.id} / {project.category.split(" / ")[0]}
-      </span>
+      <span className="mono">{project.id} / DOCUMENTATION</span>
+      <span className="mono">SCREENSHOT PENDING</span>
     </div>
   );
 }
@@ -101,64 +67,8 @@ export default function Portfolio() {
       <a className="skip" href="#profile">
         Saltar al contenido
       </a>
-      <header className="site-header">
-        <a href="#index" className="brand">
-          BG<span className="brand-divider">/</span>
-          <span className="mono">SYSTEMS PORTFOLIO</span>
-        </a>
-        <div className="header-location mono">
-          SANTIAGO / CL <span className="muted">33.45° S · 70.66° W</span>
-        </div>
-        <a className="header-contact mono" href="#contact">
-          LET’S CONNECT <span className="contact-mark">+</span>
-        </a>
-      </header>
       <main>
-        <section id="index" className="hero">
-          <div className="hero-top mono">
-            <SectionLabel number="00" title="INDEX" />
-            <div className="availability">
-              <span />
-              AVAILABLE FOR INTERNSHIP
-            </div>
-          </div>
-          <div className="hero-layout">
-            <div className="hero-copy">
-              <p className="eyebrow mono">SOFTWARE / DATA / INFRASTRUCTURE</p>
-              <h1>
-                BENJAMÍN
-                <br />
-                GONZÁLEZ<span className="name-period">.</span>
-              </h1>
-              <h2>Ingeniería Civil Informática</h2>
-              <p className="hero-description">
-                Entender sistemas.
-                <br />
-                Conectar ideas. Construir soluciones.
-              </p>
-              <div className="hero-actions flex flex-wrap gap-2">
-                <a href="#work" className="button button-primary">
-                  Projects <span className="count">06</span>
-                </a>
-                {destination("github", "GitHub")}
-                {destination("linkedin", "LinkedIn")}
-                {destination("cv", "CV")}
-              </div>
-            </div>
-            <SceneSlot />
-          </div>
-          <div className="hero-bottom mono">
-            <span>
-              LOCAL TIME <LiveClock />
-            </span>
-            <span>
-              BUILD <b>2026.10</b> <span className="muted">/ V.01</span>
-            </span>
-            <a href="#profile">
-              SCROLL TO EXPLORE <span className="scroll-mark">↓</span>
-            </a>
-          </div>
-        </section>
+        <Hero onPending={setPending} />
         <nav className="section-nav mono" aria-label="Secciones del portafolio">
           {sections.map((s, i) => (
             <a href={`#${s.toLowerCase()}`} key={s}>
@@ -215,7 +125,6 @@ export default function Portfolio() {
                   onClick={() => setSelected(project)}
                   aria-label={`Ver proyecto ${project.title}`}
                 >
-                  <ProjectVisual project={project} />
                   <div className="project-meta mono">
                     <span>{project.category}</span>
                     <span>{project.id}</span>

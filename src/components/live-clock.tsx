@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-export default function LiveClock() {
+export default function LiveClock({ display = false }: { display?: boolean }) {
   const [time, setTime] = useState("--:--:--");
   const [offset, setOffset] = useState("UTC-03");
   useEffect(() => {
@@ -30,6 +30,19 @@ export default function LiveClock() {
     const timer = setInterval(update, 1000);
     return () => clearInterval(timer);
   }, []);
+  if (display)
+    return (
+      <div className="clock-cluster">
+        <span className="mono">LOCAL TIME ({offset})</span>
+        <time
+          className="clock-display display"
+          aria-label={`Hora en Santiago: ${time}`}
+        >
+          <span>{time.slice(0, 5)}</span>
+          <span className="clock-seconds">{time.slice(6)}</span>
+        </time>
+      </div>
+    );
   return (
     <span className="clock">
       <span>{time}</span>
