@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { links } from "@/lib/portfolio";
 import LiveClock from "./live-clock";
 import SceneSlot from "./scene-slot";
@@ -8,14 +7,6 @@ export default function Hero({
 }: {
   onPending: (label: string) => void;
 }) {
-  const [resolution, setResolution] = useState("— × —");
-  useEffect(() => {
-    const update = () =>
-      setResolution(`${window.innerWidth} × ${window.innerHeight}`);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
   return (
     <section id="index" className="hero" aria-labelledby="hero-name">
       <header className="hero-header">
@@ -24,83 +15,75 @@ export default function Hero({
           href="#index"
           aria-label="BG / Systems Portfolio"
         >
-          <span className="display">BG</span>
-          <span className="mono">
-            / SYSTEMS
-            <br />
-            PORTFOLIO
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <defs>
+              <linearGradient id="brand-gradient" x1="0" y1="0" x2="1" y2="1">
+                <stop stopColor="#8052ff" />
+                <stop offset="1" stopColor="#15846e" />
+              </linearGradient>
+            </defs>
+            <path d="M4 25L15 3L28 25L16 20Z" fill="url(#brand-gradient)" />
+          </svg>
+          <span>
+            BG<span className="brand-subtitle">Systems Portfolio</span>
           </span>
         </a>
-        <div className="hero-location mono">
-          <span>SANTIAGO / CL</span>
-          <span>33.45° S / 70.66° W</span>
-          <span>BUILD 2026.10</span>
-        </div>
-      </header>
-      <div className="hero-identity">
-        <h1 id="hero-name">
-          BENJAMÍN
-          <br />
-          GONZÁLEZ
-        </h1>
-        <p>Ingeniería Civil Informática</p>
-        <span className="mono">00 / INDEX</span>
-      </div>
-      <div className="hero-status mono">
-        <span className="availability">AVAILABLE FOR INTERNSHIP</span>
-        <span>SOFTWARE / DATA / INFRASTRUCTURE</span>
-      </div>
-      <SceneSlot />
-      <div className="hero-bottom">
-        <div className="hero-bio">
-          <LiveClock display />
-          <p>
-            Estudiante de Ingeniería Civil Informática.
-            <br />
-            Explorando software, datos y sistemas.
-            <br />
-            Santiago, Chile.
-          </p>
-          <a className="inline-link" href="#profile">
-            Más sobre mí
-          </a>
-        </div>
-        <div className="artifact-caption mono">
-          <span>ASSEMBLY / 001</span>
-          <span>REALTIME 3D</span>
-          <span>{resolution}</span>
-        </div>
-        <nav className="hero-links" aria-label="Enlaces principales">
-          <a className="button" href="#work">
-            Projects <span>06</span>
-          </a>
-          <a
-            className="button"
-            href={links.github!}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          <a
-            className="button"
-            href={links.linkedin!}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <button className="button" onClick={() => onPending("CV")}>
-            CV <span className="pending-dot" aria-label="pendiente" />
-          </button>
-          <a className="button" href={`mailto:${links.email}`}>
-            Email
-          </a>
+        <nav aria-label="Navegación principal" className="header-nav">
+          <a href="#profile">Perfil</a>
+          <a href="#work">Proyectos</a>
+          <a href="#stack">Stack</a>
+          <a href="#contact">Contacto</a>
         </nav>
+        <a
+          className="header-github"
+          href={links.github!}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+      </header>
+      <div className="hero-layout">
+        <div className="hero-copy">
+          <span className="eyebrow amber">Ingeniería Civil Informática</span>
+          <h1 id="hero-name">
+            Benjamín
+            <br />
+            González<span className="amber">.</span>
+          </h1>
+          <p>
+            Conecto software, datos e infraestructura para transformar ideas en
+            sistemas que funcionan.
+          </p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#work">
+              Explorar proyectos
+            </a>
+            <a
+              className="ghost-link"
+              href={links.linkedin!}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+            <button className="ghost-link" onClick={() => onPending("CV")}>
+              CV <span className="pending-dot" aria-label="pendiente" />
+            </button>
+          </div>
+          <div className="hero-availability">
+            <span className="status-dot" />
+            Disponible para práctica profesional
+          </div>
+        </div>
+        <SceneSlot />
       </div>
-      <div className="hero-footnote mono">
-        <span>BG / ENGINEERING IN PROGRESS</span>
-        <a href="#work">01—06 / EXPLORE THE SYSTEM</a>
+      <div className="hero-footnote">
+        <span>Santiago / Chile</span>
+        <span className="hero-time">
+          Local time <LiveClock />
+        </span>
+        <span>Build 2026.10 / 00 Index</span>
       </div>
     </section>
   );

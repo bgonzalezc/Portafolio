@@ -48,7 +48,7 @@ export default function Portfolio() {
     const value = links[key];
     return value ? (
       <a
-        className="button"
+        className={label === "Hablemos" ? "button button-primary" : "button"}
         href={key === "email" ? `mailto:${value}` : value}
         target={key === "github" || key === "linkedin" ? "_blank" : undefined}
         rel="noopener noreferrer"
@@ -56,7 +56,10 @@ export default function Portfolio() {
         {label}
       </a>
     ) : (
-      <button className="button" onClick={() => setPending(label)}>
+      <button
+        className={label === "Hablemos" ? "button button-primary" : "button"}
+        onClick={() => setPending(label)}
+      >
         {label}
         <span className="pending-dot" aria-label="pendiente" />
       </button>
@@ -80,9 +83,9 @@ export default function Portfolio() {
           <SectionLabel number="01" title="PROFILE" />
           <div className="section-body profile-body">
             <h2>
-              La curiosidad como punto de partida.
+              Curiosidad.
               <br />
-              <span className="muted">La ingeniería como herramienta.</span>
+              <span className="muted">Criterio. Ingeniería.</span>
             </h2>
             <div className="profile-text">
               <p>

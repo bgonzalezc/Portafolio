@@ -2,21 +2,12 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 const contrast = localFont({
-  src: "./fonts/inter-latin-400-normal.woff2",
+  src: [
+    { path: "./fonts/inter-latin-200-normal.woff2", weight: "200" },
+    { path: "./fonts/inter-latin-400-normal.woff2", weight: "400" },
+    { path: "./fonts/inter-latin-600-normal.woff2", weight: "600" },
+  ],
   variable: "--font-contrast",
-  weight: "400",
-  display: "swap",
-});
-const telemetry = localFont({
-  src: "./fonts/jetbrains-mono-latin-400-normal.woff2",
-  variable: "--font-telemetry",
-  weight: "400",
-  display: "swap",
-});
-const display = localFont({
-  src: "./fonts/vt323-latin-400-normal.woff2",
-  variable: "--font-display",
-  weight: "400",
   display: "swap",
 });
 export const metadata: Metadata = {
@@ -29,10 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="es"
-      className={`${contrast.variable} ${telemetry.variable} ${display.variable}`}
-    >
+    <html lang="es" className={contrast.variable}>
       <body>{children}</body>
     </html>
   );

@@ -1,37 +1,41 @@
-# BG / SYSTEMS PORTFOLIO
+# Benjamín González — Systems Portfolio
 
-Portafolio de Benjamín González. Next.js App Router, TypeScript, Tailwind CSS 4 y Three.js. Composición inspirada en la referencia Max Yinger proporcionada: canvas #12130f, texto #e4dfda, metadatos de 12px, grupos en las esquinas y artefacto cromado flotante. El rosa #f5c2c8 se usa exclusivamente en la iluminación de la escena 3D.
+Portafolio web con Next.js App Router, TypeScript, Tailwind CSS 4 y Three.js. Inspirado en la referencia Dala: fondo negro puro, composición espaciosa, titulares Inter 400 de hasta 113px, cuerpo Inter 200 de 18px y una constelación procedural de triángulos. Violeta #8052ff para la acción principal; ámbar #ffb829 para énfasis; turquesa #15846e en la visualización y el logo.
 
 ## Ejecutar
 
-Requiere Node.js 20.9 o superior.
+Node.js 20.9 o superior.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Abrir http://127.0.0.1:3000. Verificar con `npm run typecheck` y `npm run build`. El build exporta la web a `out/` para hosting estático. Si se requieren funciones de servidor, retirar `output: 'export'` de `next.config.ts`.
+Abrir http://127.0.0.1:3000. Validar con `npm run typecheck` y `npm run build`.
 
-## Estructura
+El build exporta a `out/`; se puede servir en cualquier hosting estático. No depende de Sites para ejecutarse. `.openai/hosting.json` conserva la asociación a la vista privada en Sites. Nunca contiene credenciales. Retirar `output: 'export'` de `next.config.ts` si más adelante se necesitan funciones de servidor.
 
-- `src/lib/portfolio.ts`: proyectos y enlaces personales verificados; CV pendiente.
-- `src/components/hero.tsx`: composición en las esquinas y metadatos reales del viewport.
-- `src/components/live-clock.tsx`: hora en vivo de America/Santiago y offset UTC dinámico.
-- `src/components/scene-slot.tsx`: carga dinámica de la escena, sin render en servidor.
-- `src/components/three-artifact.tsx`: cinco cubos de geometría biselada, material metálico, iluminación y reflejos de estudio. Respuesta sutil al puntero, sin giro automático. Pausa fuera de pantalla; libera recursos al desmontar y respeta movimiento reducido. Incluye imagen de respaldo si WebGL no está disponible.
-- `src/components/portfolio.tsx`: secciones numeradas y diálogos de proyecto accesibles con Escape y cierre en backdrop.
-- `src/app/globals.css`: tokens, densidad, estados de interacción y composición responsive. UI sin sombras, glassmorphism, cajas o acentos cromáticos.
-- `src/app/fonts/`: Inter 400, JetBrains Mono 400 y VT323 400 con sus licencias OFL. Son sustitutos permitidos por la referencia, no las tipografías comerciales originales. Se sirven localmente mediante next/font/local.
+## Contenido y estructura
 
-## Pendiente
+- `src/lib/portfolio.ts`: los seis proyectos, stack y destinos personales verificados.
+- `src/components/hero.tsx`: cabecera, portada, enlace principal y reloj de Santiago.
+- `src/components/particle-constellation.tsx`: 2.500 triángulos de generación determinista, dos lóbulos orgánicos y partículas ambientales. Render limitado a 30 FPS, movimiento reducido, pausa fuera de pantalla y cleanup. Sin descargas de modelos o texturas. La imagen de respaldo mantiene el diseño en equipos sin WebGL.
+- `src/components/scene-slot.tsx`: carga cliente dinámica de la constelación.
+- `src/components/portfolio.tsx`: secciones y fichas de proyectos mediante dialog nativo.
+- `src/components/live-clock.tsx`: hora de America/Santiago y offset UTC dinámico.
+- `src/app/globals.css`: tokens, layout responsive, estados de interacción y movimiento reducido.
+- `src/app/fonts/`: fuentes locales y licencias OFL. Inter sustituye PPNeueMontreal manteniendo los pesos 200, 400 y 600. Las fuentes del diseño anterior se conservan como material de archivo.
+- `docs/design-reference-dala.md`: referencia visual aportada por el usuario.
+- `docs/graphify/`: análisis estructural de la primera versión, previo a los rediseños. Declara sus limitaciones; no describe el código actual.
 
-Incorporar CV en `public/cv.pdf` y asignar `links.cv = '/cv.pdf'`. Completar institución, período y fechas de ayudantía; añadir capturas, aportes, resultados y repositorios verificados. Los espacios de captura quedan en las fichas de detalle; la home solo utiliza el artefacto 3D como imagen.
+El historial conserva los diseños anteriores. `three-artifact.tsx` y `public/artifact-fallback.jpg` pertenecen a la versión de cubos; no se cargan en la home actual.
 
-Para un modelo 3D final, sustituir el ensamble en ThreeArtifact por un glTF conservando las reglas de pausa, cleanup y fallback.
+## Datos pendientes
 
-## Referencias técnicas
+Añadir CV a `public/cv.pdf` y cambiar `links.cv` a `/cv.pdf`. Completar institución, período y fechas de ayudantía; incorporar capturas, aportes individuales, resultados y repositorios verificados. Las fichas tienen espacios de captura, sin inventar imágenes ni métricas.
 
-[Exportación estática de Next.js](https://nextjs.org/docs/app/guides/static-exports), [RoundedBoxGeometry](https://threejs.org/docs/pages/RoundedBoxGeometry.html), [RoomEnvironment](https://threejs.org/docs/pages/RoomEnvironment.html).
+Los botones GitHub, LinkedIn, correo y teléfono usan los datos indicados por Benjamín. Un clic en Email abre el cliente de correo; el sitio no envía mensajes.
 
-El análisis graphify de la versión previa está separado en outputs/graphify-audit; no se publica dentro del sitio. Es una extracción estructural con aliases parcialmente resueltos; el informe declara sus limitaciones.
+## Verificación
+
+TypeScript, build estático de producción, navegación, dialog de proyecto, cierre con Escape, estado del CV pendiente y revisión visual de escritorio y móvil. La constelación usa el renderer WebGL de [Three.js](https://threejs.org/docs/pages/WebGLRenderer.html).

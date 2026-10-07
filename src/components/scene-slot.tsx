@@ -1,12 +1,14 @@
 "use client";
 import dynamic from "next/dynamic";
-const Artifact = dynamic(() => import("./three-artifact"), { ssr: false });
+const Artifact = dynamic(() => import("./particle-constellation"), {
+  ssr: false,
+});
 export default function SceneSlot() {
   return (
     <div
       className="scene"
       role="img"
-      aria-label="Ensamble de cubos cromados, iluminado en blanco hueso con reflejos rosa pálido"
+      aria-label="Constelación de pequeños triángulos violetas, ámbar y turquesa con forma de red neuronal"
     >
       <Artifact />
     </div>
